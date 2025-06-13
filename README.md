@@ -35,4 +35,4 @@
 **Examples:**
 - `Who is head of department Physics`
 - `Show Physics statistics`
-- `Create lector John 5500 ASSISTANT Physics`
+- `Create lector John Doe 5500 ASSISTANT Physics`
