@@ -49,5 +49,6 @@ public class Lector {
         this.firstname = firstname;
         this.lastname = lastname;
         this.degree = degree;
+        this.salary = salary;
     }
 }

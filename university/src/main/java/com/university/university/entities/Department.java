@@ -2,6 +2,7 @@ package com.university.university.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -41,9 +42,9 @@ public class Department {
     @JoinColumn(name = "head_of_department_id")
     private Lector headOfDepartment;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "department_lector",
+            name = "departments_lectors",
             joinColumns = @JoinColumn(name = "department_id"),
             inverseJoinColumns = @JoinColumn(name = "lector_id")
     )

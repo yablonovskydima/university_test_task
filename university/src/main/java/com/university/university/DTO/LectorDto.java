@@ -6,6 +6,8 @@ import lombok.Data;
 @Data
 public class LectorDto {
     private Long id;
-    private String name;
+    private String firstname;
+    private String lastname;
     private Degree degree;
+    private Double salary;
 }

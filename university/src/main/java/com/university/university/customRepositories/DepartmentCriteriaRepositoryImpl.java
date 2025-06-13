@@ -34,30 +34,31 @@ public class DepartmentCriteriaRepositoryImpl implements DepartmentCriteriaRepos
 
     @Override
     public DepartmentStatisticsDto getDegreeStatsByDepartmentName(String departmentName) {
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Tuple> query = cb.createTupleQuery();
-        Root<Department> department = query.from(Department.class);
-        Join<Object, Object> lector = department.join("lectors");
+        Long assistants = countByDegree(departmentName, Degree.ASSISTANT);
+        Long associateProfessors = countByDegree(departmentName, Degree.ASSOCIATE_PROFESSOR);
+        Long professors = countByDegree(departmentName, Degree.PROFESSOR);
 
-        query.multiselect(
-                cb.sum(cb.<Long>selectCase()
-                        .when(cb.equal(lector.get("degree"), Degree.ASSISTANT), 1L)
-                        .otherwise(0L)).alias("assistants"),
-                cb.sum(cb.<Long>selectCase()
-                        .when(cb.equal(lector.get("degree"), Degree.ASSOCIATE_PROFESSOR), 1L)
-                        .otherwise(0L)).alias("associateProfessors"),
-                cb.sum(cb.<Long>selectCase()
-                        .when(cb.equal(lector.get("degree"), Degree.PROFESSOR), 1L)
-                        .otherwise(0L)).alias("professors")
-        ).where(cb.equal(department.get("departmentName"), departmentName));
-
-        Tuple result = entityManager.createQuery(query).getSingleResult();
-        return new DepartmentStatisticsDto(
-                ((Number) result.get("assistants")).longValue(),
-                ((Number) result.get("associateProfessors")).longValue(),
-                ((Number) result.get("professors")).longValue()
-        );
+        return new DepartmentStatisticsDto(assistants, associateProfessors, professors);
     }
+
+    private Long countByDegree(String departmentName, Degree degree) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Long> query = cb.createQuery(Long.class);
+        Root<Department> department = query.from(Department.class);
+        Join<Department, Lector> lector = department.join("lectors", JoinType.LEFT);
+
+        query.select(cb.count(lector))
+                .where(
+                        cb.and(
+                                cb.equal(department.get("departmentName"), departmentName),
+                                cb.equal(lector.get("degree"), degree)
+                        )
+                );
+
+        return entityManager.createQuery(query).getSingleResult();
+    }
+
+
 
 
     @Override
