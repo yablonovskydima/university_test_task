@@ -6,11 +6,15 @@ import com.university.university.entities.Department;
 import com.university.university.entities.Lector;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.Tuple;
-import jakarta.persistence.criteria.*;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.JoinType;
+import jakarta.persistence.criteria.Root;
 import org.springframework.stereotype.Repository;
 
-import java.util.*;
+import java.util.Optional;
+
 
 @Repository
 public class DepartmentCriteriaRepositoryImpl implements DepartmentCriteriaRepository {

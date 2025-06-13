@@ -1,7 +1,5 @@
 package com.university.university.mappers;
 
-import com.university.university.DTO.DepartmentDto;
-import com.university.university.entities.Department;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.MappingException;
 import org.modelmapper.ModelMapper;
@@ -10,7 +8,6 @@ import org.modelmapper.convention.MatchingStrategies;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
